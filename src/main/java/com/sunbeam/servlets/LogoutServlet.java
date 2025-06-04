@@ -9,6 +9,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
@@ -23,6 +24,9 @@ public class LogoutServlet extends HttpServlet {
 		Cookie c = new Cookie("uname", "");
 		c.setMaxAge(-1);
 		resp.addCookie(c);
+		
+		HttpSession session = req.getSession();
+		session.invalidate();
 		
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();

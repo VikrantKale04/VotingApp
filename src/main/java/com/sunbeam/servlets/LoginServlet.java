@@ -14,6 +14,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -33,6 +34,10 @@ public class LoginServlet extends HttpServlet {
 			Cookie c = new Cookie("uname", u.getFirstName()+"-"+u.getLastName());
 			c.setMaxAge(3600);
 			resp.addCookie(c);
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("user", u);
+			
 			if(u != null && u.getPassword().equals(passwd)) {
 				if(u.getRole().equals("admin"))
 					resp.sendRedirect("result");
