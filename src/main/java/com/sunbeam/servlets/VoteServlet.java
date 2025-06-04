@@ -9,6 +9,7 @@ import com.sunbeam.daos.UserDao;
 import com.sunbeam.daos.UserDaoImpl;
 import com.sunbeam.entities.User;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -34,6 +35,12 @@ public class VoteServlet extends HttpServlet {
 		out.println("<title>Vote</title>");
 		out.println("</head>");
 		out.println("<body>");
+		
+//		Get title from web.xml
+		ServletContext app = req.getServletContext();
+		String title = app.getInitParameter("apptitle");
+		out.println("<h2>"+title+"</h2>");
+		
 		String uname = "";
 		Cookie[] arr = req.getCookies();
 		if(arr != null && arr.length > 0) {
@@ -42,6 +49,7 @@ public class VoteServlet extends HttpServlet {
 					uname = c.getValue();
 			}
 		}
+		out.printf("<h2>Hello, %s </h2>\n", uname);
 		int candId = Integer.parseInt(req.getParameter("candidate"));
 		
 		HttpSession session = req.getSession();
@@ -69,7 +77,7 @@ public class VoteServlet extends HttpServlet {
 			}
 			out.println("Your vote registered.");
 		}
-		out.printf("<h1>Hello, %s </h1>\n", uname);
+		
 		out.println("<div><a href='logout'>Sign Out</a></div>");
 		out.println("</body>");
 		out.println("</html>");

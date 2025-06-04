@@ -41,6 +41,13 @@ public class CandidateListServlet extends HttpServlet {
 		out.println("<title>Candidates</title>");
 		out.println("</head>");
 		out.println("<body>");
+		
+//		Get app title from context-param (in web.xml)
+		ServletContext app = req.getServletContext();
+		String title = app.getInitParameter("apptitle");
+		out.println("<h2>"+title+"</h2>");
+		
+		
 		String uname = "";
 		Cookie[] arr = req.getCookies();
 		if(arr != null && arr.length > 0) {
@@ -50,7 +57,7 @@ public class CandidateListServlet extends HttpServlet {
 			}
 		}
 //		out.println("Hello, " + uname + "<br/>");
-		out.printf("<h1>Hello, %s </h1>\n", uname);
+		out.printf("<h2>Hello, %s </h2>\n", uname);
 		
 //		Get announcement
 		ServletContext ctx = req.getServletContext();
@@ -58,7 +65,7 @@ public class CandidateListServlet extends HttpServlet {
 		if(ann != null)
 			out.printf("<h3>ATTENTION :  %s </h3>\n", ann);
 		
-		out.println("<h1>Candidates List</h1>");
+		out.println("<h3>Candidates List</h3>");
 		out.println("<form method='post' action='vote'>");
 		for(Candidate c : list) {
 			out.printf("<input type='radio' name='candidate' value='%d'/> %s - %s <br/>\n", c.getId(), c.getName(), c.getParty());

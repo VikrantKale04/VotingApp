@@ -8,6 +8,7 @@ import com.sunbeam.daos.CandidateDao;
 import com.sunbeam.daos.CandidateDaoImpl;
 import com.sunbeam.entities.Candidate;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -39,6 +40,11 @@ public class ResultServlet extends HttpServlet {
 		out.println("<title>Candidates</title>");		
 		out.println("</head>");
 		out.println("<body>");
+		
+		ServletContext app = req.getServletContext();
+		String title = app.getInitParameter("apptitle");
+		out.println("<h2>"+title+"</h2>");
+		
 		String uname = "";
 		Cookie[] arr = req.getCookies();
 		if(arr != null && arr.length > 0) {
@@ -47,8 +53,8 @@ public class ResultServlet extends HttpServlet {
 					uname = c.getValue();
 			}
 		}
-		out.printf("<h1>Hello, %s </h1>\n", uname);
-		out.println("<h1>Candidate List</h1>");		
+		out.printf("<h2>Hello, %s </h2>\n", uname);
+		out.println("<h2>Candidate List</h2>");		
 		out.println("<table border = '1'>");
 		out.println("<thead>");
 		out.println("<tr>");
