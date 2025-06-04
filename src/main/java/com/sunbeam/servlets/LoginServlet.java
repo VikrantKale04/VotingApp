@@ -2,6 +2,7 @@ package com.sunbeam.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.CookieHandler;
 
 import com.sunbeam.daos.UserDao;
 import com.sunbeam.daos.UserDaoImpl;
@@ -9,6 +10,7 @@ import com.sunbeam.entities.User;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +30,9 @@ public class LoginServlet extends HttpServlet {
 		
 		try(UserDao userDao = new UserDaoImpl()){
 			User u = userDao.findByEmail(email);
+			Cookie c = new Cookie("uname", u.getFirstName()+"-"+u.getLastName());
+			c.setMaxAge(3600);
+			resp.addCookie(c);
 			if(u != null && u.getPassword().equals(passwd)) {
 				if(u.getRole().equals("admin"))
 					resp.sendRedirect("result");
