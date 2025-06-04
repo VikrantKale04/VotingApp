@@ -69,6 +69,7 @@ public class ResultServlet extends HttpServlet {
 		}
 		out.println("</tbody>");
 		out.println("</table>");
+		out.println("<div><a href='announcement.html'>Announcement</a></div>");
 		out.println("<div><a href='logout'>Sign Out</a></div>");
 		out.println("</body>");
 		out.println("</html>");

@@ -8,6 +8,7 @@ import com.sunbeam.daos.CandidateDao;
 import com.sunbeam.daos.CandidateDaoImpl;
 import com.sunbeam.entities.Candidate;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -50,6 +51,13 @@ public class CandidateListServlet extends HttpServlet {
 		}
 //		out.println("Hello, " + uname + "<br/>");
 		out.printf("<h1>Hello, %s </h1>\n", uname);
+		
+//		Get announcement
+		ServletContext ctx = req.getServletContext();
+		String ann = (String)ctx.getAttribute("announcemet");
+		if(ann != null)
+			out.printf("<h3>ATTENTION :  %s </h3>\n", ann);
+		
 		out.println("<h1>Candidates List</h1>");
 		out.println("<form method='post' action='vote'>");
 		for(Candidate c : list) {
